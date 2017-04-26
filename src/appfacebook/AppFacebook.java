@@ -5,8 +5,7 @@
  */
 package appfacebook;
 
-import facebook4j.Facebook;
-import facebook4j.FacebookFactory;
+import facebook4j.*;
 
 /**
  *
@@ -20,9 +19,11 @@ public class AppFacebook {
     Facebook facebook = new FacebookFactory().getInstance();
     
     
-    
+    /**
     https://unpocodejava.wordpress.com/2014/10/07/un-poco-de-facebook4j-facebook-java/
     http://facebook4j.github.io/en/code-examples.html
+    https://developers.facebook.com/
+    * /
     /**
      * @param args the command line arguments
      */
