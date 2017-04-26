@@ -5,31 +5,72 @@
  */
 package appfacebook;
 
-import facebook4j.*;
+import facebook4j.Facebook;
+import facebook4j.FacebookException;
+import facebook4j.FacebookFactory;
+import facebook4j.Media;
+import facebook4j.Post;
+import facebook4j.ResponseList;
+import facebook4j.conf.ConfigurationBuilder;
+import java.io.File;
+import javax.swing.JOptionPane;
 
 /**
  *
- * @author erodriguez-lepinamartinez
+ * @author ricky_000
  */
 public class AppFacebook {
 
-    /**At first it is necessary to acquire Facebook instance to use Facebook4J.
-    You can get Facebook instance in FacebookFactory.getInstance().
-    */
-    Facebook facebook = new FacebookFactory().getInstance();
-    
-    
-    /**
-    https://unpocodejava.wordpress.com/2014/10/07/un-poco-de-facebook4j-facebook-java/
-    http://facebook4j.github.io/en/code-examples.html
-    https://developers.facebook.com/
-    * /
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FacebookException {
         // TODO code application logic here
-        
+         ConfigurationBuilder cb = new ConfigurationBuilder();
+        cb.setDebugEnabled(true)
+                .setOAuthAppId("1898782940334640")
+                .setOAuthAppSecret("")
+                .setOAuthAccessToken("")
+                .setOAuthPermissions("");
+        FacebookFactory ff = new FacebookFactory(cb.build());
+        Facebook fb = ff.getInstance();
+
+        Boolean contin = true;
+        do {
+            String option = JOptionPane.showInputDialog("Seleccione una opcion");
+            switch (option) {
+                case "a":
+                    String comentario1 = JOptionPane.showInputDialog("Comentario: ");
+                    fb.postStatusMessage(comentario1);
+                    break;
+                case "b":
+                    //Dar Like a un post
+                    String IdPost = JOptionPane.showInputDialog("Id del Post a comentar");
+                    fb.likePost(IdPost);
+                    break;
+                case "c":
+                    //Subir foto
+                    Media foto = new Media(new File("URl de la foto"));
+                    fb.postPhoto(foto);
+                    break;
+                case "d":
+                    //Publicar un Comentario
+                    String IdPost1 = JOptionPane.showInputDialog("Id del Post a comentar");
+                    String comentario = JOptionPane.showInputDialog("Comentario: ");
+                    fb.commentPost(IdPost1, comentario);
+                    break;
+                case "e":
+                    //Obtener Comentarios
+                    String idpost = JOptionPane.showInputDialog("Id del Post para obtener comentarios");
+                    fb.getCommentReplies(idpost);
+                    break;
+                case "f":
+                    //Buscar Posts
+                    String busqueda = JOptionPane.showInputDialog("Buscar: ");
+                    ResponseList<Post> results = fb.searchPosts(busqueda);
+                    break;
+            }
+        } while (contin = true);
     }
     
 }
